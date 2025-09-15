@@ -82,7 +82,7 @@ export default function LandingPage() {
               <div className="bg-white rounded-2xl shadow-2xl p-8 transform rotate-2 hover:rotate-0 transition-transform duration-300">
                 <div className="text-center">
                   <div className="text-6xl mb-4">👵🏻👴🏻</div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Margaret & Harold</h3>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Delores & Jamil</h3>
                   <p className="text-gray-600 mb-6">
                     &quot;Finally, tech support that speaks our language! No more waiting on hold or confusing instructions.&quot;
                   </p>

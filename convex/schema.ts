@@ -161,17 +161,20 @@ export default defineSchema({
   createdAt: v.number(),
   }).index('by_userId', ['userId']),
   services: defineTable({
-    name: v.string(),
+    title: v.string(),
+    duration: v.number(), // in minutes
     description: v.string(),
     price: v.number(),
+    icon: v.optional(v.string()),
+    color: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.optional(v.number()),  
-  }).index('by_name', ['name'] ),
+  }).index('by_title', ['title'] ),
   reviews: defineTable({
     userId: v.string(),
     serviceId: v.string(),  
     rating: v.number(), // e.g., 1 to 5
-    comment: v.optional(v.string()),
+    comment: v.optional(v.string()),this
     createdAt: v.number(),
   }).index('by_serviceId', ['serviceId'] ),
   favorites: defineTable({
@@ -180,6 +183,6 @@ export default defineSchema({
     itemType: v.string(), // e.g., 'service', 'product'
     addedAt: v.number(),
   }).index('by_userId', ['userId']),
-  
+
 });
 
