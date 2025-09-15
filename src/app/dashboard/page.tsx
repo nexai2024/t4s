@@ -41,7 +41,7 @@ export default function DashboardPage() {
           { icon: "🛡️", title: "Scam Check", desc: "Verify suspicious messages", link: "/booking" },
           { icon: "⚙️", title: "Device Health", desc: "Check your devices", link: "/booking"  }
         ].map((action, index) => (
-          <Link href={action.link} className="no-underline">
+          <Link href={action.link} key={index} className="no-underline">
           <button key={index} className="text-4xl mb-3">{action.icon}
             <h3 className="text-lg font-semibold text-gray-800 mb-2">{action.title}</h3>
             <p className="text-gray-600 text-sm">{action.desc}</p>
