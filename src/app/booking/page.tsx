@@ -594,7 +594,7 @@ export default function BookingPage() {
                 <h1 className="text-2xl font-bold text-gray-900">Book Your Tech Help Session</h1>
               </div>
               <div className="text-sm text-gray-600">
-                Need immediate help? <span className="text-blue-600 font-medium cursor-pointer">Call (555) 123-TECH</span>
+                Need immediate help? <span className="text-blue-600 font-medium cursor-pointer">Call (267) 776-9766</span>
               </div>
             </div>
           </div>

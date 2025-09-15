@@ -1,19 +1,27 @@
 "use client"
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
+import type { UserResource } from '@clerk/types';
 export default function DashboardPage() {
-    const [user, setUser] = React.useState({
-      name: "Margaret",
-      isLoggedIn: true,
-      supportLevel: "basic"
-    });
+    const [user, setUser] = React.useState<UserResource | null>(null);
     
     const [activeSection, setActiveSection] = React.useState("dashboard");
     const [helpRequests, setHelpRequests] = React.useState([
       { id: 1, issue: "WiFi Connection", status: "resolved", date: "2 days ago" },
       { id: 2, issue: "Email Setup", status: "in-progress", date: "Today" }
     ]);
-  
+    const { isLoaded, user: clerkUser } = useUser();
+
+    useEffect(() => {
+      if (isLoaded && clerkUser) {
+        setUser(clerkUser);
+      }
+    }, [isLoaded, clerkUser]);
+    if (!user) {
+      return <div>Loading...</div>;
+    } 
+
     // Emergency Help Button Component
     const EmergencyHelpButton = () => (
       <button className="w-full bg-red-500 hover:bg-red-600 text-white text-2xl font-bold py-6 px-8 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-200 mb-6">
@@ -33,12 +41,8 @@ export default function DashboardPage() {
           { icon: "🛡️", title: "Scam Check", desc: "Verify suspicious messages", link: "/booking" },
           { icon: "⚙️", title: "Device Health", desc: "Check your devices", link: "/booking"  }
         ].map((action, index) => (
-          <Link href={action.link} key={index} className="no-underline">
-          <button
-            key={index}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow border-2 border-gray-100 hover:border-blue-300"
-          >
-            <div className="text-4xl mb-3">{action.icon}</div>
+          <Link href={action.link} className="no-underline">
+          <button key={index} className="text-4xl mb-3">{action.icon}
             <h3 className="text-lg font-semibold text-gray-800 mb-2">{action.title}</h3>
             <p className="text-gray-600 text-sm">{action.desc}</p>
           </button>
@@ -104,10 +108,10 @@ export default function DashboardPage() {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <div className="text-2xl">🤝</div>
-              <h1 className="text-xl font-bold text-gray-800">TechConcierge</h1>
+              <h1 className="text-xl font-bold text-gray-800">Tech4Seniors</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-600">Hello, {user.name}!</span>
+              <span className="text-gray-600">Hello, {user?.fullName || "Guest"}!</span>
               <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                 Settings
               </button>
@@ -128,7 +132,7 @@ export default function DashboardPage() {
           {/* Welcome Message */}
           <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-6 rounded-r-lg">
             <h2 className="text-lg font-semibold text-blue-800 mb-2">
-              Welcome back, {user.name}! 👋
+              Welcome back, {user?.fullName || "Guest"}! 👋
             </h2>
             <p className="text-blue-700">
               Your tech support team is here whenever you need us. What can we help you with today?

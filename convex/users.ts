@@ -1,9 +1,7 @@
 import { ConvexError, v } from 'convex/values';
 
-import { api, internal } from './_generated/api';
-import { Doc, Id } from './_generated/dataModel';
+import { Doc } from './_generated/dataModel';
 import {
-  action,
   internalMutation,
   internalQuery,
   mutation,
@@ -171,7 +169,7 @@ export const updateSubscription = internalMutation({
     const user = await getUserByUserId(ctx, args.userId);
 
     if (!user) {
-      throw new Error('no user found with that user id');
+      throw new ConvexError('no user found with that user id');
     }
 
     await ctx.db.patch(user._id, {
@@ -192,7 +190,7 @@ export const updateSubscriptionBySubId = internalMutation({
       .first();
 
     if (!user) {
-      throw new Error('no user found with that user id');
+      throw new ConvexError('no user found with that user id');
     }
 
     await ctx.db.patch(user._id, {
@@ -226,26 +224,21 @@ export const isPremium = query({
 export const updateUserOnboardingCompleted = mutation({
   args: {},
   async handler(ctx, args) {
-    // Get the userId of the current user
     const userId = await getUserId(ctx);
-    console.log('userId', userId);
-    // Check if there is a userId
+    
     if (!userId) {
       throw new ConvexError('You must be logged in.');
     }
 
-    // Check if the user exists in the database
     const user = await ctx.db
       .query('users')
       .withIndex('by_userId', (q) => q.eq('userId', userId))
       .first();
 
-    // If the user doesn't exist, throw an error
     if (!user) {
       throw new ConvexError('User not found');
     }
 
-    // The update the onboardingCompleted field to true
     await ctx.db.patch(user._id, {
       onboardingCompleted: true,
     });
