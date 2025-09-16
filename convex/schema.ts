@@ -174,7 +174,7 @@ export default defineSchema({
     userId: v.string(),
     serviceId: v.string(),  
     rating: v.number(), // e.g., 1 to 5
-    comment: v.optional(v.string()),this
+    comment: v.optional(v.string()),
     createdAt: v.number(),
   }).index('by_serviceId', ['serviceId'] ),
   favorites: defineTable({
